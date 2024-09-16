@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des cours</title>
+    <!-- Style CSS et Icône-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/manager.css"> 
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/manager.js"></script>
+</head>
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+            aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des cours -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours.html">Planifier un cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-register.html">Inscrire un abonné</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-tracking.html">Suivi des présences</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/manager/cours-list.html">Historique des cours</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale - Liste des cours -->
+            <section class="content">
+                <div class="container mt-5">
+                    <h2 class="mb-4">Historique des Cours</h2>
+                
+                    <!-- Barre de recherche pour filtrer par nom de cours -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="text" id="search-course" class="form-control" placeholder="Rechercher un cours par nom" onkeyup="filtrerCours()">
+                        </div>
+                
+                        <!-- Filtrer par instructeur -->
+                        <div class="col-md-6">
+                            <select id="filter-instructor" class="form-control" onchange="filtrerCours()">
+                                <option value="">Tous les Instructeurs</option>
+                                <option value="Djibril Maïga">Djibril Maïga</option>
+                                <option value="Fatou Traoré">Fatou Traoré</option>
+                                <option value="Amadou Koné">Amadou Koné</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <!-- Tableau des cours -->
+                    <table class="table table-striped" id="courses-table">
+                        <thead>
+                            <tr>
+                                <th>Nom du Cours</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Instructeur</th>
+                                <th>Nombre de Participants</th>
+                                <th>Actions</th> <!-- Colonne Actions ajoutée -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Karaté pour Débutants</td>
+                                <td>10/09/2024</td>
+                                <td>10:00 AM</td>
+                                <td>Djibril Maïga</td>
+                                <td>15</td>
+                                <td>
+                                    <!-- Boutons pour consulter et supprimer -->
+                                    <a href="/html/manager/cours-detail.html?id=1" class="btn btn-info btn-sm me-2">
+                                        <i class="fas fa-eye"></i> Consulter
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" onclick="supprimerCours(1)">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Boxe pour Intermédiaires</td>
+                                <td>10/09/2024</td>
+                                <td>2:00 PM</td>
+                                <td>Fatou Traoré</td>
+                                <td>12</td>
+                                <td>
+                                    <a href="/html/manager/cours-detail.html?id=2" class="btn btn-info btn-sm me-2">
+                                        <i class="fas fa-eye"></i> Consulter
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" onclick="supprimerCours(2)">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Karaté Avancé</td>
+                                <td>09/09/2024</td>
+                                <td>4:00 PM</td>
+                                <td>Amadou Koné</td>
+                                <td>8</td>
+                                <td>
+                                    <a href="/html/manager/cours-detail.html?id=3" class="btn btn-info btn-sm me-2">
+                                        <i class="fas fa-eye"></i> Consulter
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" onclick="supprimerCours(3)">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Autres lignes de cours -->
+                        </tbody>
+                    </table>
+                </div>                
+            </section>            
+        </div>
+    </div>
+</body>
+</html>

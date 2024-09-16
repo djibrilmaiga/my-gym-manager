@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation Abonné</title>
+    <!-- Stule CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Détails de l'abonné</h2>
+
+    <!-- Bouton de retour à la liste des abonnés -->
+    <a href="/html/manager/abonne.html" class="btn btn-danger mb-4">
+        <i class="bi bi-arrow-left"></i> Retour
+    </a>
+
+    <!-- Onglets de navigation -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="info-personnel-tab" data-bs-toggle="tab" data-bs-target="#info-personnel" type="button" role="tab" aria-controls="info-personnel" aria-selected="true">Informations Personnelles</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="historique-abonnement-tab" data-bs-toggle="tab" data-bs-target="#historique-abonnement" type="button" role="tab" aria-controls="historique-abonnement" aria-selected="false">Historique des Abonnements</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="historique-paiement-tab" data-bs-toggle="tab" data-bs-target="#historique-paiement" type="button" role="tab" aria-controls="historique-paiement" aria-selected="false">Historique des Paiements</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="modifier-info-tab" data-bs-toggle="tab" data-bs-target="#modifier-info" type="button" role="tab" aria-controls="modifier-info" aria-selected="false">Modifier les Informations Personnelles</button>
+        </li>
+    </ul>
+
+    <!-- Contenu des onglets -->
+    <div class="tab-content mt-3" id="myTabContent">
+        <!-- Onglet Informations Personnelles -->
+        <div class="tab-pane fade show active" id="info-personnel" role="tabpanel" aria-labelledby="info-personnel-tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Détails Personnels</h5>
+                    <p class="card-text"><strong>Nom Complet :</strong> Djibril Maïga</p>
+                    <p class="card-text"><strong>Genre :</strong> Homme</p>
+                    <p class="card-text"><strong>Email :</strong> djibril.maiga@example.com</p>
+                    <p class="card-text"><strong>Téléphone :</strong> +223 79 00 00 00</p>
+                    <p class="card-text"><strong>Date d'inscription :</strong> 01/01/2024</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Historique des Abonnements -->
+        <div class="tab-pane fade" id="historique-abonnement" role="tabpanel" aria-labelledby="historique-abonnement-tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Historique des Abonnements</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date Début</th>
+                                <th>Date Fin</th>
+                                <th>Type d'Abonnement</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01/01/2023</td>
+                                <td>31/01/2023</td>
+                                <td>Mensuel</td>
+                                <td>Terminé</td>
+                            </tr>
+                            <tr>
+                                <td>01/02/2023</td>
+                                <td>28/02/2023</td>
+                                <td>Mensuel</td>
+                                <td>Actif</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Historique des Paiements -->
+        <div class="tab-pane fade" id="historique-paiement" role="tabpanel" aria-labelledby="historique-paiement-tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Historique des Paiements</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date de Paiement</th>
+                                <th>Type de Paiement</th>
+                                <th>Montant</th>
+                                <th>Méthode de Paiement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01/01/2023</td>
+                                <td>Abonnement Mensuel</td>
+                                <td>15 000 CFA</td>
+                                <td>Mobile Money</td>
+                            </tr>
+                            <tr>
+                                <td>01/02/2023</td>
+                                <td>Cours de karaté</td>
+                                <td>15 000 CFA</td>
+                                <td>Carte Bancaire</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <h6>Total des paiements : <span id="total-paiements">0</span> CFA</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Modifier les Informations Personnelles -->
+        <div class="tab-pane fade" id="modifier-info" role="tabpanel" aria-labelledby="modifier-info-tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Modifier les Informations Personnelles</h5>
+                    <form id="modifier-info-form">
+                        <div class="mb-3">
+                            <label for="nom-complet" class="form-label">Nom Complet</label>
+                            <input type="text" class="form-control" id="nom-complet" value="Djibril Maïga">
+                        </div>
+                        <div class="mb-3">
+                            <label for="genre" class="form-label">Genre</label>
+                            <select id="genre" class="form-control">
+                                <option value="Homme" selected>Homme</option>
+                                <option value="Femme">Femme</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" value="djibril.maiga@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telephone" class="form-label">Téléphone</label>
+                            <input type="text" class="form-control" id="telephone" value="+223 79 00 00 00">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer les Modifications</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

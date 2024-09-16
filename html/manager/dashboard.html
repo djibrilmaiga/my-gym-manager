@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Salle de Sport</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/manager.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" defer></script>
+    <script src="/js/calendar-course.js" defer></script>
+    <script src="/js/dash-chart.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn ">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <div class="container-fluid">
+                <ul class="nav nav-tabs mb-4" id="dashboardTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Vue d'Ensemble</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="subscriptions-tab" data-bs-toggle="tab" data-bs-target="#subscriptions" type="button" role="tab" aria-controls="subscriptions" aria-selected="false">Abonnements Échéants</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="dashboardTabContent">
+                    <!-- Vue d'Ensemble -->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="row mt-4">
+                            <h2>Statistique</h2>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Abonnés</h5>
+                                        <p class="card-text">150</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Instructeurs</h5>
+                                        <p class="card-text">4</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Recette du mois</h5>
+                                        <p class="card-text">250 000 FCFA</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Cours Planifiés Cette Semaine</h5>
+                                        <p class="card-text">45</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Équipements en Service</h5>
+                                        <p class="card-text">25</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Abonnements expiré</h5>
+                                        <p class="card-text">2</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart Section -->
+                        <div class="row">
+                            <h2>Graphiques</h2>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Taux de Participation aux Cours</h5>
+                                        <canvas id="participationChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Paiements</h5>
+                                        <canvas id="paiementsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 mt-4">
+                                <h2>Affiche du mois</h2>
+                                <div class="container mb-4">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                            <!-- Notifications -->
+                            <div class="row mt-4">
+                                <h2>Notifications Automatiques</h2>
+                                <div class="alert alert-warning" role="alert">
+                                    <strong>Attention!</strong> 10 abonnements ont expiré cette semaine.
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>Rappel:</strong> 5 demandes de remboursement en attente de traitement.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Abonnements Prochains -->
+                    <div class="tab-pane fade" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab">
+                        <h5 class="mt-4">Abonnements Échéants dans les 7 Prochains Jours</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom de l'Abonné</th>
+                                            <th>Date d'Échéance</th>
+                                            <th>Type d'Abonnement</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Ajouter dynamiquement -->
+                                        <tr>
+                                            <td>Jean Dupont</td>
+                                            <td>20/09/2024</td>
+                                            <td>Mensuel</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Marie Curie</td>
+                                            <td>25/09/2024</td>
+                                            <td>Annuel</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

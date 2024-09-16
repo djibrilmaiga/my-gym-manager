@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des techniciens</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Dashboard -->
+                <li class="text-start">
+                    <a href="/html/admin/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+        
+                <!-- Utilisateurs -->
+                <li class="text-start">
+                    <a href="/html/admin/user-create.html">
+                        <i class="fas fa-users-cog"></i> Utilisateurs
+                    </a>
+                </li>
+        
+                <!-- Services -->
+                <li class="text-start">
+                    <a href="/html/admin/services.html">
+                        <i class="fas fa-concierge-bell"></i> Services
+                    </a>
+                </li>
+        
+                <!-- Cours -->
+                <li class="text-start">
+                    <a href="/html/admin/cours.html">
+                        <i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+        
+                <!-- Paiements -->
+                <li class="text-start">
+                    <a href="/html/admin/paiements.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+        
+                <!-- Équipements -->
+                <li class="text-start">
+                    <a href="/html/admin/equipements.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+        
+                <!-- Rapports -->
+                <li class="text-start">
+                    <a href="/html/admin/rapports.html">
+                        <i class="fas fa-chart-pie"></i> Rapports
+                    </a>
+                </li>
+        
+                <!-- Déconnexion -->
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+            
+             <!-- Fil d'Ariane ou sous-menus pour la gestion des équipements -->
+             <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/equipements.html">Créer un équipement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/equipements-list.html">Liste des équipements</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/admin/technicien.html">Gestion des techniciens</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/maintenance-create.html">Planifier une maintenance</a></li>  
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/maintenances-list.html">Historique des maintenance</a></li>                   
+                     </ul>
+                </nav>
+            </div>
+
+            <main class="content">
+                <h2 class="mb-4">Gestion des techniciens</h2>
+
+                <!-- Onglets de navigation pour gestion des techniciens -->
+                <div class="container mt-4">
+                    <ul class="nav nav-tabs" id="technicienTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="creer-technicien-tab" data-bs-toggle="tab" data-bs-target="#creer-technicien" type="button" role="tab" aria-controls="creer-technicien" aria-selected="true">Créer un technicien</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="liste-technicien-tab" data-bs-toggle="tab" data-bs-target="#liste-technicien" type="button" role="tab" aria-controls="liste-technicien" aria-selected="false">Liste des techniciens</button>
+                        </li>
+                    </ul>
+
+                    <!-- Contenu des onglets -->
+                    <div class="tab-content mt-3" id="technicienTabContent">
+                        <!-- Onglet Créer un technicien -->
+                        <div class="tab-pane fade show active" id="creer-technicien" role="tabpanel" aria-labelledby="creer-technicien-tab">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Créer un Technicien</h5>
+                                    <form>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="nomTechnicien" placeholder="Nom">
+                                            <label for="nomTechnicien">Nom</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="prenomTechnicien" placeholder="Prénom">
+                                            <label for="prenomTechnicien">Prénom</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="tel" class="form-control" id="telTechnicien" placeholder="Téléphone">
+                                            <label for="telTechnicien">Téléphone</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Ajouter Technicien</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Onglet Liste des techniciens -->
+                        <div class="tab-pane fade" id="liste-technicien" role="tabpanel" aria-labelledby="liste-technicien-tab">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Liste des Techniciens</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Téléphone</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Maïga</td>
+                                                <td>Djibril</td>
+                                                <td>12345678</td>
+                                                <td>
+                                                    <button class="btn btn-warning btn-sm me-2">Modifier</button>
+                                                    <button class="btn btn-secondary btn-sm">Supprimer</button>
+                                                </td>
+                                            </tr>
+                                            <!-- Autres techniciens peuvent être ajoutés ici -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Remboursements</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Dashboard -->
+                <li class="text-start">
+                    <a href="/html/admin/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+
+                <!-- Utilisateurs -->
+                <li class="text-start">
+                    <a href="/html/admin/user-create.html">
+                        <i class="fas fa-users-cog"></i> Utilisateurs
+                    </a>
+                </li>
+
+                <!-- Services -->
+                <li class="text-start">
+                    <a href="/html/admin/services.html">
+                        <i class="fas fa-concierge-bell"></i> Services
+                    </a>
+                </li>
+
+                <!-- Cours -->
+                <li class="text-start">
+                    <a href="/html/admin/cours.html">
+                        <i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+
+                <!-- Paiements -->
+                <li class="text-start">
+                    <a href="/html/admin/paiements.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+
+                <!-- Équipements -->
+                <li class="text-start">
+                    <a href="/html/admin/equipements.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+
+                <!-- Rapports -->
+                <li class="text-start">
+                    <a href="/html/admin/rapports.html">
+                        <i class="fas fa-chart-pie"></i> Rapports
+                    </a>
+                </li>
+
+                <!-- Déconnexion -->
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des remboursements -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/paiements.html">Liste des paiements</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/admin/remboursement.html">Remboursement</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale - Gestion des remboursements -->
+            <main class="content">
+                <h2 class="mb-4">Gestion des Remboursements - Administrateur</h2>
+
+                <!-- Onglets de navigation -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="form-remboursement-tab" data-bs-toggle="tab" data-bs-target="#form-remboursement" type="button" role="tab" aria-controls="form-remboursement" aria-selected="true">Formulaire de Remboursement</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="liste-remboursement-tab" data-bs-toggle="tab" data-bs-target="#liste-remboursement" type="button" role="tab" aria-controls="liste-remboursement" aria-selected="false">Liste des Remboursements</button>
+                    </li>
+                </ul>
+
+                <!-- Contenu des onglets -->
+                <div class="tab-content mt-3" id="myTabContent">
+                    <!-- Onglet Formulaire de Remboursement -->
+                    <div class="tab-pane fade show active" id="form-remboursement" role="tabpanel" aria-labelledby="form-remboursement-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Formulaire de Remboursement</h5>
+                                <form id="remboursement-form">
+                                    <div class="mb-3">
+                                        <label for="abonne" class="form-label">Sélectionner un Abonné</label>
+                                        <select id="abonne" class="form-select">
+                                            <!-- Options des abonnés (à générer dynamiquement) -->
+                                            <option value="1">Abonné 1</option>
+                                            <option value="2">Abonné 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="paiement" class="form-label">Sélectionner un Paiement</label>
+                                        <select id="paiement" class="form-select">
+                                            <!-- Options des paiements (à générer dynamiquement) -->
+                                            <option value="1">Paiement 1</option>
+                                            <option value="2">Paiement 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="montant" class="form-label">Montant à Rembourser</label>
+                                        <input type="number" id="montant" class="form-control" step="0.01" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="motif" class="form-label">Motif du Remboursement</label>
+                                        <textarea id="motif" class="form-control" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="statut" class="form-label">Décision</label>
+                                        <select id="statut" class="form-select">
+                                            <option value="approuve">Approuvé</option>
+                                            <option value="refuse">Refusé</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Liste des Remboursements -->
+                    <div class="tab-pane fade" id="liste-remboursement" role="tabpanel" aria-labelledby="liste-remboursement-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Liste des Demandes de Remboursement</h5>
+                                <div class="mb-3">
+                                    <label for="filter-status" class="form-label">Filtrer par Statut</label>
+                                    <select id="filter-status" class="form-select">
+                                        <option value="">Tous</option>
+                                        <option value="en-attente">En Attente</option>
+                                        <option value="approuve">Approuvé</option>
+                                        <option value="refuse">Refusé</option>
+                                    </select>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Abonné</th>
+                                            <th>Nom</th>
+                                            <th>Montant</th>
+                                            <th>Motif de Remboursement</th>
+                                            <th>Statut</th>
+                                            <th>Date de Demande</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Exemple de données -->
+                                        <tr>
+                                            <td>001</td>
+                                            <td>Abonné 1</td>
+                                            <td>50.00 €</td>
+                                            <td>Erreur de Facturation</td>
+                                            <td>En Attente</td>
+                                            <td>12/09/2024</td>
+                                        </tr>
+                                        <tr>
+                                            <td>002</td>
+                                            <td>Abonné 2</td>
+                                            <td>30.00 €</td>
+                                            <td>Annulation d'Abonnement</td>
+                                            <td>Approuvé</td>
+                                            <td>10/09/2024</td>
+                                        </tr>
+                                        <!-- Les données seront injectées dynamiquement -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Script pour gérer le filtre par statut dans la liste des remboursements
+        document.getElementById('filter-status').addEventListener('change', function () {
+            let filter = this.value;
+            let rows = document.querySelectorAll('table tbody tr');
+
+            rows.forEach(row => {
+                let statusCell = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
+                if (filter === '' || statusCell.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

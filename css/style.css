@@ -1,0 +1,11 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-image: url(/assets/page_login.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.btn-primary {
+    background-color: #2e3c50;
+    border-color: #2e3c50;
+}

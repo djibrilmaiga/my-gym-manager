@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Financiers</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/manager.css"> 
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/manager.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.0/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour les rapports financiers -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement-add.html">Enregistrer un paiement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement.html">Suivi des paiements</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/manager/paiement-rapports.html">Rapports Financiers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement-remboursement.html">Remboursement</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale - Rapports financiers -->
+            <section class="content">
+                <!-- Formulaire de sélection de période -->
+                <div class="container mt-4">
+                    <h2>Rapports Financiers</h2>
+                    <form id="report-form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="period">Sélectionner la période :</label>
+                                    <select id="period" class="form-select">
+                                        <option value="daily">Par jour</option>
+                                        <option value="weekly">Par semaine</option>
+                                        <option value="monthly">Par mois</option>
+                                        <option value="yearly">Par année</option>
+                                        <option value="custom">Plage de dates personnalisée</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" id="custom-dates" style="display: none;">
+                                    <label for="start-date">Date de début :</label>
+                                    <input type="date" id="start-date" class="form-control">
+                                    <label for="end-date">Date de fin :</label>
+                                    <input type="date" id="end-date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary mt-4" onclick="generateReport()">Générer le rapport</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section des rapports générés -->
+                <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Résumé des paiements</h3>
+                            <div id="report-summary">
+                                <!-- Résumé des paiements affiché ici -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Graphiques -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h3>Répartition des paiements</h3>
+                            <canvas id="payment-methods-chart"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Tendances des paiements</h3>
+                            <canvas id="payment-trends-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Exportation -->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <button class="btn btn-success" onclick="exportReport('pdf')">Exporter en PDF</button>
+                            <button class="btn btn-success" onclick="exportReport('excel')">Exporter en Excel</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Script JS -->
+    <script>
+        document.getElementById('period').addEventListener('change', function() {
+            document.getElementById('custom-dates').style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        function generateReport() {
+            // Logique pour générer le rapport
+            // Remplir le résumé des paiements et les graphiques avec les données obtenues
+        }
+
+        function exportReport(format) {
+            // Logique pour exporter le rapport
+            alert(`Exporter le rapport en ${format}`);
+        }
+
+        // Exemple de données pour les graphiques
+        const paymentMethodsCtx = document.getElementById('payment-methods-chart').getContext('2d');
+        const paymentTrendsCtx = document.getElementById('payment-trends-chart').getContext('2d');
+
+        new Chart(paymentMethodsCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Mobile Money', 'Cash'],
+                datasets: [{
+                    label: 'Répartition des méthodes de paiement',
+                    data: [60, 40], // Exemple de données
+                    backgroundColor: ['#36a2eb', '#ff6384']
+                }]
+            }
+        });
+
+        new Chart(paymentTrendsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Paiements par mois',
+                    data: [1200, 1500, 1700, 1600, 1800, 2100], // Exemple de données
+                    backgroundColor: '#36a2eb'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

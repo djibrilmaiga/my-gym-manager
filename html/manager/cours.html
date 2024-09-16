@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module des Cours</title>
+    <!-- Style CSS et Icône-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/css/manager.css"> 
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js' defer></script>
+    <script src="/js/calendar-course.js" defer></script>
+</head>
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+            aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des cours -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="/html/manager/cours.html">Planifier un cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-register.html">Inscrire un abonné</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-tracking.html">Suivi des présences</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-list.html">Historique des cours</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale - Liste des cours -->
+            <section class="content">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="mb-0">Créer un Cours</h2>
+                    </div>
+                    <!-- Formulaire de création ou modification -->
+                    <div class="card-body">
+                        <form id="course-form">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="course-title" class="form-label">Titre du Cours</label>
+                                    <input type="text" id="course-title" class="form-control" placeholder="Titre du cours" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="course-type" class="form-label">Type de Cours</label>
+                                    <select id="course-type" class="form-select" required>
+                                        <option value="Collectif">Collectif</option>
+                                        <option value="Particulier">Particulier</option>
+                                    </select>
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="course-time" class="form-label">Horaire</label>
+                                    <input type="datetime-local" id="course-time" class="form-control" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="course-duration" class="form-label">Durée (en minutes)</label>
+                                    <input type="number" id="course-duration" class="form-control" required min="1" />
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="course-capacity" class="form-label">Capacité</label>
+                                    <input type="number" id="course-capacity" class="form-control" required min="1" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="instructor" class="form-label">Instructeur</label>
+                                    <select id="instructor" class="form-select" required>
+                                        <option value="John Doe">John Doe</option>
+                                        <option value="Jane Smith">Jane Smith</option>
+                                        <!-- Ajouter d'autres instructeurs ici -->
+                                    </select>
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label for="course-description" class="form-label">Description du Cours</label>
+                                    <textarea id="course-description" class="form-control" rows="3" placeholder="Décrire le contenu du cours..." required></textarea>
+                                </div>
+                            </div>
+                    
+                            <button type="submit" class="btn btn-primary" id="course-submit">Créer</button>
+                            <button type="reset" class="btn btn-secondary">Annuler</button>
+                        </form>
+                    </div>
+
+                    <!-- Calendrier des cours planifié-->
+                    <div class="container mt-4">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </section>            
+        </div>
+    </div>
+</body>
+</html>

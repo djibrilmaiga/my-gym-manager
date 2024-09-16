@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Statistiques</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Links to other pages -->
+                <li class="text-start"><a href="/html/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="text-start"><a href="/html/admin/user-create.html"><i class="fas fa-users-cog"></i> Utilisateurs</a></li>
+                <li class="text-start"><a href="/html/admin/services.html"><i class="fas fa-concierge-bell"></i> Services</a></li>
+                <li class="text-start"><a href="/html/admin/cours.html"><i class="fas fa-calendar-alt"></i> Séances</a></li>
+                <li class="text-start"><a href="/html/admin/paiements.html"><i class="fas fa-money-bill-wave"></i> Paiements</a></li>
+                <li class="text-start"><a href="/html/admin/equipements.html"><i class="fas fa-dumbbell"></i> Équipements</a></li>
+                <li class="text-start"><a href="/html/admin/rapports.html"><i class="fas fa-chart-pie"></i> Rapports</a></li>
+                <li class="text-start mt-auto"><a href="#logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour les rapports -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="/html/admin/rapports.html">Rapports Statistiques</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/rapports-financiers.html">Rapports Financiers</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <main class="content">
+                <div class="container">
+
+                    <!-- Section 1: KPI Abonnés -->
+                    <section id="kpi-abonnes">
+                        <h3>Indicateurs liés aux Abonnés</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Nombre Total d’Abonnés</h5>
+                                        <p class="card-text display-3">85</p>
+                                        <canvas id="genderDistributionChart"></canvas> <!-- Répartition par genre -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Nouveaux Abonnés (Mo./An.)</h5>
+                                        <p class="card-text display-4">+50</p>
+                                        <canvas id="newSubscribersChart"></canvas> <!-- Histogramme des nouveaux abonnés -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Moyenne Participants/cours</h5>
+                                        <p class="card-text display-3">10</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </section>
+
+                    <!-- Section 2: KPI Instructeurs -->
+                    <section id="kpi-instructeurs">
+                        <h3>Indicateurs liés aux Instructeurs</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Cours Donnés par Instructeur</h5>
+                                        <canvas id="instructorsClassesChart"></canvas> <!-- Histogramme du nombre de cours donnés -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Taux de Participation aux Cours</h5>
+                                        <p class="card-text display-3">75%</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Répartition des Instructeurs par Cours</h5>
+                                        <canvas id="instructorCourseDistributionChart"></canvas> <!-- Diagramme circulaire des cours par instructeur -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: KPI Équipements -->
+                    <section id="kpi-equipements">
+                        <h3>Indicateurs liés aux Équipements</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Nombre Total d’Équipements</h5>
+                                        <p class="card-text display-3">150</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Équipements en Maintenance</h5>
+                                        <p class="card-text display-3">5</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Coûts de Maintenance (FCFA)</h5>
+                                        <p class="card-text display-3">45 000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts pour les graphiques -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Répartition des abonnés par genre (Graphique circulaire)
+            var ctxGender = document.getElementById('genderDistributionChart').getContext('2d');
+            new Chart(ctxGender, {
+                type: 'pie',
+                data: {
+                    labels: ['Masculins', 'Féminins'],
+                    datasets: [{
+                        data: [750, 500],
+                        backgroundColor: ['#007bff', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Nouveaux abonnés par mois (Histogramme)
+            var ctxNewSubscribers = document.getElementById('newSubscribersChart').getContext('2d');
+            new Chart(ctxNewSubscribers, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'],
+                    datasets: [{
+                        label: 'Nouveaux Abonnés',
+                        data: [5, 8, 10, 12, 15, 9, 11, 20, 18, 22, 17, 30],
+                        backgroundColor: '#28a745'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Cours donnés par instructeur (Histogramme)
+            var ctxInstructorsClasses = document.getElementById('instructorsClassesChart').getContext('2d');
+            new Chart(ctxInstructorsClasses, {
+                type: 'bar',
+                data: {
+                    labels: ['Instructeur A', 'Instructeur B', 'Instructeur C', 'Instructeur D'],
+                    datasets: [{
+                        label: 'Cours Donnés',
+                        data: [35, 50, 40, 60],
+                        backgroundColor: '#17a2b8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Répartition des cours par instructeur (Graphique circulaire)
+            var ctxInstructorCourseDistribution = document.getElementById('instructorCourseDistributionChart').getContext('2d');
+            new Chart(ctxInstructorCourseDistribution, {
+                type: 'pie',
+                data: {
+                    labels: ['Cours A', 'Cours B', 'Cours C', 'Cours D'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

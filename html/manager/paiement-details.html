@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Paiement</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Détails du Paiement</h2>
+
+        <!-- Bouton de retour à la liste des paiements -->
+        <a href="/html/manager/paiement.html" class="btn btn-danger mb-4">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+
+        <!-- Onglets de navigation -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-paiement-tab" data-bs-toggle="tab" data-bs-target="#info-paiement" type="button" role="tab" aria-controls="info-paiement" aria-selected="true">Informations sur le Paiement</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="modifier-info-tab" data-bs-toggle="tab" data-bs-target="#modifier-info" type="button" role="tab" aria-controls="modifier-info" aria-selected="false">Mise à jour du Paiement</button>
+            </li>
+        </ul>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content mt-3" id="myTabContent"> 
+            
+            <!-- Onglet informations sur le Paiement -->
+            <div class="tab-pane fade show active" id="info-paiement" role="tabpanel" aria-labelledby="info-paiement-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Informations sur le Paiement</h5>
+                        <p><strong>Nom Complet :</strong> Djibril Maïga</p>
+                        <p><strong>Type de Paiement :</strong> Abonnement (Mensuel)</p>
+                        <p><strong>Montant Payé :</strong> 12 000 CFA</p>
+                        <p><strong>Montant Restant :</strong> 3 000 CFA</p>
+                        <p><strong>Date de Paiement :</strong> 30/08/2024</p>
+                        <p><strong>Méthode de Paiement :</strong> Mobile Money</p>
+                        <p><strong>Statut du Paiement :</strong> Partiel</p>
+                        <p><strong>Date d'échéance :</strong> 15/09/2024</p>
+                        <p><strong>Commentaires :</strong> Paiement partiel, le reste doit être réglé avant la date d'échéance.</p>
+                        <!-- Bouton pour générer le PDF -->
+                        <button id="download-pdf" class="btn btn-primary">Télécharger la Facture (PDF)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire de mise à jour du paiement -->
+            <div class="tab-pane fade" id="modifier-info" role="tabpanel" aria-labelledby="modifier-info-tab">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Mise à jour du Paiement</h5>
+                        <form id="update-payment-form">
+                            <!-- Montant -->
+                            <div class="mb-3">
+                                <label for="amount-paid" class="form-label">Montant Payé</label>
+                                <input type="number" class="form-control" id="amount-paid" value="12000" required>
+                            </div>
+
+                            <!-- Montant restant -->
+                            <div class="mb-3">
+                                <label for="remaining-amount" class="form-label">Montant Restant</label>
+                                <input type="number" class="form-control" id="remaining-amount" value="3000">
+                            </div>
+
+                            <!-- Statut de l'abonnement -->
+                            <div class="mb-3">
+                                <label for="subscription-status" class="form-label">Statut de l'Abonnement</label>
+                                <select id="subscription-status" class="form-select">
+                                    <option value="complet">Complet</option>
+                                    <option value="partiel" selected>Partiel</option>
+                                </select>
+                            </div>
+
+                            <!-- Date d'échéance si partiel -->
+                            <div class="mb-3" id="due-date-section">
+                                <label for="due-date" class="form-label">Date d'échéance</label>
+                                <input type="date" class="form-control" id="due-date" value="2024-09-15">
+                            </div>
+
+                            <!-- Commentaires -->
+                            <div class="mb-3">
+                                <label for="comments" class="form-label">Commentaires</label>
+                                <textarea class="form-control" id="comments" rows="3">Paiement partiel, le reste doit être réglé avant la date d'échéance.</textarea>
+                            </div>
+
+                            <!-- Boutons d'action -->
+                            <button type="submit" class="btn btn-success">Mettre à jour</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <script>
+        // Logique pour afficher ou masquer la date d'échéance selon le statut de l'abonnement
+        document.getElementById("subscription-status").addEventListener("change", function() {
+            const dueDateSection = document.getElementById("due-date-section");
+            if (this.value === "partiel") {
+                dueDateSection.style.display = "block";
+            } else {
+                dueDateSection.style.display = "none";
+            }
+        });
+
+        // Préremplir le formulaire selon le statut actuel
+        window.onload = function() {
+            const status = document.getElementById("subscription-status").value;
+            const dueDateSection = document.getElementById("due-date-section");
+            if (status === "partiel") {
+                dueDateSection.style.display = "block";
+            } else {
+                dueDateSection.style.display = "none";
+            }
+        };
+
+        // Logique de mise à jour du paiement (peut être modifiée selon ton backend)
+        document.getElementById("update-payment-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const paymentDetails = {
+                amountPaid: document.getElementById("amount-paid").value,
+                remainingAmount: document.getElementById("remaining-amount").value,
+                status: document.getElementById("subscription-status").value,
+                dueDate: document.getElementById("due-date").value,
+                comments: document.getElementById("comments").value
+            };
+
+            console.log("Détails mis à jour:", paymentDetails);
+            // Ajouter ici la logique pour envoyer les données au backend (par exemple avec fetch ou axios)
+        });
+
+        // Fonction pour générer et télécharger le PDF
+        document.getElementById("download-pdf").addEventListener("click", function() {
+            const element = document.querySelector(".tab-pane.active");
+            html2pdf().from(element).save('facture-paiement.pdf');
+        });
+    </script>
+</body>
+
+</html>

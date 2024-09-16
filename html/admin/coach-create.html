@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des cours - Gym Manager</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Dashboard -->
+                <li class="text-start">
+                    <a href="/html/admin/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+        
+                <!-- Utilisateurs -->
+                <li class="text-start">
+                    <a href="/html/admin/user-create.html">
+                        <i class="fas fa-users-cog"></i> Utilisateurs
+                    </a>
+                </li>
+        
+                <!-- Services -->
+                <li class="text-start">
+                    <a href="/html/admin/services.html">
+                        <i class="fas fa-concierge-bell"></i> Services
+                    </a>
+                </li>
+        
+                <!-- Cours -->
+                <li class="text-start">
+                    <a href="/html/admin/cours.html">
+                        <i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+        
+                <!-- Paiements -->
+                <li class="text-start">
+                    <a href="/html/admin/paiements.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+        
+                <!-- Équipements -->
+                <li class="text-start">
+                    <a href="/html/admin/equipements.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+        
+                <!-- Rapports -->
+                <li class="text-start">
+                    <a href="/html/admin/rapports.html">
+                        <i class="fas fa-chart-pie"></i> Rapports
+                    </a>
+                </li>
+        
+                <!-- Déconnexion -->
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+            
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des cours -->
+            <div class="navbar navbar-expand-md">
+               <nav class="breadcrumb">
+                   <ul class="nav nav-tabs mb-4 ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/html/admin/cours.html">Historique des cours</a></li>
+                       <li class="nav-item"><a class="nav-link active" href="/html/admin/coach-create.html">Créer un Instructeur </a></li>
+                       <li class="nav-item"><a class="nav-link" href="/html/admin/coachs-list.html">Liste des Instructeurs </a></li>
+                   </ul>
+               </nav>
+           </div>
+           <main class="content container">
+                <div class="card mb-5">
+                    <div class="card-header">
+                        <h5>Créer un service</h5>
+                    </div>
+                    <div class="container mt-5">
+                        <h2 class="mb-4">Créer un Instructeur</h2>
+                        <div class="card-body">
+                            <form id="form-abonnement">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="nomAbonnement" placeholder="Nom de l'abonnement" required>
+                                            <label for="nomAbonnement">Nom du service</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="dureeAbonnement" placeholder="Durée en jours" required>
+                                            <label for="dureeAbonnement">Durée (en jours)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="descriptionAbonnement" placeholder="Description de l'abonnement">
+                                            <label for="descriptionAbonnement">Description</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="prixAbonnement" placeholder="Prix en FCFA" required>
+                                            <label for="prixAbonnement">Prix (FCFA)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="typeServices" class="form-label">Type de service</label>
+                                        <select id="typeServices" class="form-select">
+                                            <option value="inscription">Inscription</option>
+                                            <option value="abonnement">Abonnement</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="servicesInclus" class="form-label">Services inclus</label>
+                                        <select id="servicesInclus" class="form-select" multiple>
+                                            <option value="musculation">Accès à la salle de musculation</option>
+                                            <option value="boxe">Karaté</option>
+                                            <option value="yoga">Kick-Boxing</option>
+                                            <option value="fitness">Fitness</option>
+                                        </select>
+                                        <small class="text-muted">Maintenez la touche Ctrl pour sélectionner plusieurs services</small>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </form>
+                        </div>
+                    </div> 
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+ 

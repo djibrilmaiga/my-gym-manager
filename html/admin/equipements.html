@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Équipements</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Dashboard -->
+                <li class="text-start">
+                    <a href="/html/admin/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+        
+                <!-- Utilisateurs -->
+                <li class="text-start">
+                    <a href="/html/admin/user-create.html">
+                        <i class="fas fa-users-cog"></i> Utilisateurs
+                    </a>
+                </li>
+        
+                <!-- Services -->
+                <li class="text-start">
+                    <a href="/html/admin/services.html">
+                        <i class="fas fa-concierge-bell"></i> Services
+                    </a>
+                </li>
+        
+                <!-- Cours -->
+                <li class="text-start">
+                    <a href="/html/admin/cours.html">
+                        <i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+        
+                <!-- Paiements -->
+                <li class="text-start">
+                    <a href="/html/admin/paiements.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+        
+                <!-- Équipements -->
+                <li class="text-start">
+                    <a href="/html/admin/equipements.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+        
+                <!-- Rapports -->
+                <li class="text-start">
+                    <a href="/html/admin/rapports.html">
+                        <i class="fas fa-chart-pie"></i> Rapports
+                    </a>
+                </li>
+        
+                <!-- Déconnexion -->
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des équipements -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="/html/admin/equipements.html">Créer un équipement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/equipements-list.html">Liste des équipements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/technicien.html">Gestion des techniciens</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/maintenance-create.html">Planifier une maintenance</a></li>  
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/maintenances-list.html">Historique des maintenance</a></li>                   
+                     </ul>
+                </nav>
+            </div>
+
+            <!-- Contenu principal avec onglets -->
+            <div class="content">
+                <h2 class="mb-4">Créer un équipement</h2>
+
+                <!-- Onglets de navigation -->
+                <ul class="nav nav-tabs" id="equipementsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="categorie-tab" data-bs-toggle="tab" data-bs-target="#categorie" type="button" role="tab" aria-controls="categorie" aria-selected="true">Catégories</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="equipement-tab" data-bs-toggle="tab" data-bs-target="#equipement" type="button" role="tab" aria-controls="equipement" aria-selected="false">Équipements</button>
+                    </li>
+                </ul>
+
+                <!-- Contenu des onglets -->
+                <div class="tab-content mt-3" id="equipementsTabContent">
+                    <!-- Onglet Catégories -->
+                    <div class="tab-pane fade show active" id="categorie" role="tabpanel" aria-labelledby="categorie-tab">
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Créer une Catégorie d'Équipement</h5>
+                                <form>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="categorieNom" placeholder="Nom de la catégorie">
+                                        <label for="categorieNom">Nom de la catégorie</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Catégorie</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-light mb-3 mt-4">
+                            <div class="card-body">
+                                <h6 class="card-title">Liste des Catégories</h6>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Musculation</td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm me-2">Modifier</button>
+                                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Autres catégories peuvent être listées ici -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Onglet Équipements -->
+                    <div class="tab-pane fade" id="equipement" role="tabpanel" aria-labelledby="equipement-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Créer un Équipement</h5>
+                                <form>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="equipementNom" placeholder="Nom de l'équipement">
+                                        <label for="equipementNom">Nom de l'équipement</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="equipementQuantite" placeholder="Quantité">
+                                        <label for="equipementQuantite">Quantité</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="categorieSelect">
+                                            <option selected>Sélectionner une catégorie</option>
+                                            <option value="1">Musculation</option>
+                                            <option value="2">Cardio</option>
+                                        </select>
+                                        <label for="categorieSelect">Catégorie</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Équipement</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

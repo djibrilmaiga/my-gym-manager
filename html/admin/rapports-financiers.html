@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Financiers</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Administrateur</h5>
+            </div>
+            <ul>
+                <!-- Dashboard -->
+                <li class="text-start">
+                    <a href="/html/admin/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+
+                <!-- Utilisateurs -->
+                <li class="text-start">
+                    <a href="/html/admin/user-create.html">
+                        <i class="fas fa-users-cog"></i> Utilisateurs
+                    </a>
+                </li>
+
+                <!-- Services -->
+                <li class="text-start">
+                    <a href="/html/admin/services.html">
+                        <i class="fas fa-concierge-bell"></i> Services
+                    </a>
+                </li>
+
+                <!-- Cours -->
+                <li class="text-start">
+                    <a href="/html/admin/cours.html">
+                        <i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+
+                <!-- Paiements -->
+                <li class="text-start">
+                    <a href="/html/admin/paiements.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+
+                <!-- Équipements -->
+                <li class="text-start">
+                    <a href="/html/admin/equipements.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+
+                <!-- Rapports -->
+                <li class="text-start">
+                    <a href="/html/admin/rapports.html">
+                        <i class="fas fa-chart-pie"></i> Rapports
+                    </a>
+                </li>
+
+                <!-- Déconnexion -->
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour les rapports -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/admin/rapports.html">Rapports Statistiques</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/admin/rapports-financiers.html">Rapports Financiers</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <main class="content">
+                <div class="container">
+                    <h2 class="mb-4">Rapports Financiers</h2>
+
+                    <!-- Indices Financiers -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Revenus Totaux</h6>
+                                    <canvas id="totalRevenueChart"></canvas>
+                                    <small>Répartition : Espèces, Carte, Mobile Money</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Revenus par Type d’Abonnement</h6>
+                                    <canvas id="subscriptionRevenueChart"></canvas>
+                                    <small>Mensuel, Trimestriel, Annuel</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Revenus par Service</h6>
+                                    <canvas id="serviceRevenueChart"></canvas>
+                                    <small>Inscription, Abonnement, Cours</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Taux de Croissance des Revenus</h6>
+                                    <canvas id="revenueGrowthChart"></canvas>
+                                    <small>Comparaison Mois/Année</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sélection de la période -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="reportPeriod">Période de Rapport</label>
+                                <select id="reportPeriod" class="form-select">
+                                    <option value="month">Ce Mois</option>
+                                    <option value="year">Cette Année</option>
+                                    <option value="custom">Plage de Dates</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="customDateRange" style="display: none;">
+                            <div class="form-group">
+                                <label for="startDate">Date de Début</label>
+                                <input type="date" id="startDate" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="customDateRange" style="display: none;">
+                            <div class="form-group">
+                                <label for="endDate">Date de Fin</label>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tableau des Paiements -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tableau des Paiements</h5>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Type de paiement</th>
+                                                <th>Date de paiement</th>
+                                                <th>Montant - FCFA</th>
+                                                <th>Méthode de Paiement</th>
+                                                <th>Abonné</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Lignes de tableau dynamiques -->
+                                            <tr>
+                                                <td>Abonnement mensuel</td>
+                                                <td>10/09/2024</td>
+                                                <td>15 000</td>
+                                                <td>Cash</td>
+                                                <td>Djibril Maïga</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cours Karaté</td>
+                                                <td>01/09/2024</td>
+                                                <td>5000</td>
+                                                <td>Espèces</td>
+                                                <td>Fatou Sylla</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <button class="btn btn-primary me-2" id="exportPdf"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
+                                        <button class="btn btn-success" id="exportExcel"><i class="fas fa-file-excel"></i> Exporter en Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Graphiques -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tendances de Paiement</h5>
+                                    <canvas id="paymentTrendsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Taux de Renouvellement d’Abonnement</h5>
+                                    <canvas id="subscriptionRenewalChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts pour les graphiques et l'exportation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Revenus Totaux (Répartition : Espèces, Carte, Mobile Money)
+            var ctxTotalRevenue = document.getElementById('totalRevenueChart').getContext('2d');
+            new Chart(ctxTotalRevenue, {
+                type: 'pie',
+                data: {
+                    labels: ['Espèces', 'Carte', 'Mobile Money'],
+                    datasets: [{
+                        data: [50000, 30000, 20000], // Valeurs fictives
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Revenus par Type d’Abonnement
+            var ctxSubscriptionRevenue = document.getElementById('subscriptionRevenueChart').getContext('2d');
+            new Chart(ctxSubscriptionRevenue, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Mensuel', 'Trimestriel', 'Annuel'],
+                    datasets: [{
+                        data: [30000, 50000, 20000], // Valeurs fictives
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Revenus par Service (Inscription, Abonnement, Cours)
+            var ctxServiceRevenue = document.getElementById('serviceRevenueChart').getContext('2d');
+            new Chart(ctxServiceRevenue, {
+                type: 'bar',
+                data: {
+                    labels: ['Inscription', 'Abonnement', 'Cours'],
+                    datasets: [{
+                        label: 'Revenus (FCFA)',
+                        data: [20000, 60000, 30000], // Valeurs fictives
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Taux de Croissance des Revenus
+            var ctxRevenueGrowth = document.getElementById('revenueGrowthChart').getContext('2d');
+            new Chart(ctxRevenueGrowth, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Taux de Croissance (%)',
+                        data: [5, 10, 15, 20, 10, 15, 25, 30, 20], // Valeurs fictives
+                        borderColor: '#36A2EB',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Initialisation des graphiques
+            var ctxPaymentTrends = document.getElementById('paymentTrendsChart').getContext('2d');
+            var ctxSubscriptionRenewal = document.getElementById('subscriptionRenewalChart').getContext('2d');
+
+            new Chart(ctxPaymentTrends, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Paiements Mensuels (FCFA)',
+                        data: [15000, 20000, 18000, 24000, 20000, 23000, 28000, 22000, 25000],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true
+                    }]
+                }
+            });
+
+            new Chart(ctxSubscriptionRenewal, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Renouvelé', 'Non Renouvelé'],
+                    datasets: [{
+                        data: [70, 30],
+                        backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

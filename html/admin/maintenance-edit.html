@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulter et Modifier une Maintenance</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Détails de la Maintenance</h2>
+
+        <!-- Bouton de retour à la liste des maintenances -->
+        <a href="/html/admin/maintenances-list.html" class="btn btn-danger mb-4">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+
+        <!-- Onglets de navigation -->
+        <ul class="nav nav-tabs" id="maintenanceTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="details-maintenance-tab" data-bs-toggle="tab" data-bs-target="#details-maintenance" type="button" role="tab" aria-controls="details-maintenance" aria-selected="true">Détails de la maintenance</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="modifier-maintenance-tab" data-bs-toggle="tab" data-bs-target="#modifier-maintenance" type="button" role="tab" aria-controls="modifier-maintenance" aria-selected="false">Modifier la maintenance</button>
+            </li>
+        </ul>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content mt-3" id="maintenanceTabContent">
+            <!-- Onglet Détails de la Maintenance -->
+            <div class="tab-pane fade show active" id="details-maintenance" role="tabpanel" aria-labelledby="details-maintenance-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Informations sur la Maintenance</h5>
+                        <p class="card-text"><strong>Équipement :</strong> Tapis de course</p>
+                        <p class="card-text"><strong>Numéro de série :</strong> TC12345</p>
+                        <p class="card-text"><strong>Date de maintenance :</strong> 15/09/2024</p>
+                        <p class="card-text"><strong>Coût(FCFA):</strong> 10 000</p>
+                        <p class="card-text"><strong>Technicien :</strong> Moussa Coulibaly</p>
+                        <p class="card-text"><strong>Statut :</strong> En panne</p>
+                        <p class="card-text"><strong>Description :</strong> Remplacement du moteur du tapis de course.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Modifier la Maintenance -->
+            <div class="tab-pane fade" id="modifier-maintenance" role="tabpanel" aria-labelledby="modifier-maintenance-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Modifier les Informations de la Maintenance</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label for="nom-equipement" class="form-label">Nom de l'Équipement</label>
+                                <input type="text" class="form-control" id="nom-equipement" value="Tapis de course">
+                            </div>
+                            <div class="mb-3">
+                                <label for="numero-serie" class="form-label">Numéro de Série</label>
+                                <input type="text" class="form-control" id="numero-serie" value="TC12345">
+                            </div>
+                            <div class="mb-3">
+                                <label for="date-maintenance" class="form-label">Date de Maintenance</label>
+                                <input type="date" class="form-control" id="date-maintenance" value="2024-09-15">
+                            </div>
+                            <div class="mb-3">
+                                <label for="technicien" class="form-label">Technicien</label>
+                                <input type="text" class="form-control" id="technicien" value="Moussa Coulibaly">
+                            </div>
+                            <div class="mb-3">
+                                <label for="statut" class="form-label">Statut</label>
+                                <select class="form-control" id="statut">
+                                    <option>En cours</option>
+                                    <option selected>Terminé</option>
+                                    <option>Annulé</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3">Remplacement du moteur du tapis de course.</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

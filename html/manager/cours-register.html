@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrire un abonné à un cours</title>
+    <!-- Style CSS et Icône-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/manager.css">
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/register-course.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+            aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours.html">Planifier un cours</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/html/manager/cours-register.html">Inscrire un abonné</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-tracking.html">Suivi des présences</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/cours-list.html">Historique des cours</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale -->
+            <section class="content">
+                <div class="container mt-5">
+                    <h2 class="mb-4">Inscrire un Abonné à un Cours</h2>
+                
+                    <!-- Recherche du cours -->
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control" id="search-course" placeholder="Rechercher un cours...">
+                        <button class="btn btn-outline-secondary" type="button" onclick="rechercherCours()">Rechercher</button>
+                    </div>
+
+                    <!-- Liste des cours -->
+                    <h4 class="mb-3">Cours disponibles</h4>
+                    <table class="table table-striped" id="course-list">
+                        <thead>
+                            <tr>
+                                <th>Nom du Cours</th>
+                                <th>Heure</th>
+                                <th>Instructeur</th>
+                                <th>Capacité Restante</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Les cours seront ajoutés ici dynamiquement -->
+                        </tbody>
+                    </table>
+
+                    <!-- Section pour ajouter les abonnés une fois le cours sélectionné -->
+                    <div id="abonne-section" class="mt-5" style="display: none;">
+                        <h4 class="mb-4">Ajouter des abonnés au cours sélectionné</h4>
+
+                        <!-- Instructeur -->
+                        <p id="instructeur-info">Instructeur: </p>
+
+                        <!-- Barre de recherche pour les abonnés -->
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" id="search-abonne" placeholder="Rechercher un abonné...">
+                            <button class="btn btn-outline-secondary" type="button" onclick="rechercherAbonne()">Rechercher</button>
+                        </div>
+
+                        <!-- Liste des abonnés -->
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nom de l'Abonné</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="abonne-list">
+                                <!-- Les abonnés seront ajoutés ici dynamiquement -->
+                            </tbody>
+                        </table>
+
+                        <button class="btn btn-primary" onclick="confirmerInscription()">Enregistrer les inscriptions</button>
+                    </div>
+
+                    <!-- Popup de confirmation d'inscription -->
+                    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmationLabel">Confirmation d'Inscription</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Voulez-vous confirmer l'inscription des abonnés sélectionnés à ce cours ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-primary" onclick="validerInscription()">Confirmer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>                
+            </section>            
+        </div>
+    </div>
+</body>
+
+</html>

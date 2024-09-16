@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enregistrer un Paiement</title>
+    <!-- Style CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/manager.css"> 
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/manager.js" defer></script>
+</head>
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="sidebar collapse d-md-block" id="sidebar">
+            <div id="user-role-text" class="text-center mb-3 mt-4">
+                <h5>Page Gestionnaire</h5>
+            </div>
+            <ul>
+                <li class="text-start">
+                    <a href="/html/manager/dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/abonne.html">
+                        <i class="fas fa-users"></i> Abonnés
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/paiement.html">
+                        <i class="fas fa-money-bill-wave"></i> Paiements
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/cours.html"><i class="fas fa-calendar-alt"></i> Séances
+                    </a>
+                </li>
+                <li class="text-start">
+                    <a href="/html/manager/equipement.html">
+                        <i class="fas fa-dumbbell"></i> Équipements
+                    </a>
+                </li>
+                <li class="text-start mt-auto">
+                    <a href="#logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <!-- Header avec le nom de l'application -->
+            <header class="header">
+                <div class="app-name">Gym Manager</div>
+            </header>
+
+            <!-- Fil d'Ariane ou sous-menus pour la gestion des abonnés -->
+            <div class="navbar navbar-expand-md">
+                <nav class="breadcrumb">
+                    <ul class="nav nav-tabs mb-4 ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="/html/manager/paiement-add.html">Enregistrer un paiement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement.html">Suivi des paiements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement-rapports.html">Rapports Financiers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/html/manager/paiement-remboursement.html">Remboursement</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Section principale - Enregistrer un paiement -->
+            <section class="content">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">Enregistrer un Paiement</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="payment-form">
+                            <!-- Sélection de l'abonné -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="subscriber" class="form-label">Abonné</label>
+                                    <select id="subscriber" class="form-select" required>
+                                        <!-- Options dynamiques depuis la base de données -->
+                                        <option value="" disabled selected>Choisir un abonné</option>
+                                        <option value="1">Djibril Maïga</option>
+                                        <option value="2">Autre Abonné</option>
+                                        <!-- Ajouter d'autres abonnés ici -->
+                                    </select>
+                                </div>
+                                <!-- Sélection du service -->
+                                <div class="col-md-6">
+                                    <label for="service" class="form-label">Service</label>
+                                    <select id="service" class="form-select" required>
+                                        <!-- Options dynamiques depuis la base de données -->
+                                        <option value="" disabled selected>Choisir un service</option>
+                                        <option value="abonnement">Abonnement</option>
+                                        <option value="cours">Cours</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- Type de paiement -->
+                                <div class="col-md-6">
+                                    <label for="payment-type" class="form-label">Type de Paiement</label>
+                                    <select id="payment-type" class="form-select" required>
+                                        <!-- Options dynamiques depuis la base de données -->
+                                        <option value="" disabled selected>Choisir un type</option>
+                                        <option value="abonnement">Abonnement</option>
+                                        <option value="cours">Cours</option>
+                                    </select>
+                                </div>
+        
+                                <!-- Mode de paiement -->
+                                <div class="col-md-6">
+                                    <label for="payment-method" class="form-label">Mode de Paiement</label>
+                                    <select id="payment-method" class="form-select" required>
+                                        <option value="carte_bancaire">Cash</option>
+                                        <option value="mobile_money">Mobile Money</option>                                        
+                                        <!-- Ajouter d'autres modes de paiement si nécessaire -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- Statut du paiement -->
+                                <div class="col-md-6">
+                                    <label for="payment-status" class="form-label">Statut du Paiement</label>
+                                    <select id="payment-status" class="form-select" required>
+                                        <option value="complet">Complet</option>
+                                        <option value="partiel">Partiel</option>
+                                    </select>
+                                </div>
+                                <!-- Montant à payer -->
+                                <div class="col-md-6">
+                                    <label for="amount-due" class="form-label">Montant à Payer</label>
+                                    <input type="number" class="form-control" id="amount-due" readonly>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- Montant payé -->
+                                <div class="col-md-6">
+                                    <label for="amount-paid" class="form-label">Montant Payé</label>
+                                    <input type="number" class="form-control" id="amount-paid" required>
+                                </div>
+        
+                                <!-- Montant restant -->
+                                <div class="col-md-6">
+                                    <label for="amount-remaining" class="form-label">Montant Restant</label>
+                                    <input type="number" class="form-control" id="amount-remaining" readonly>
+                                </div>
+                            </div>
+                            <!-- Date d'échéance -->
+                            <div class=" row mb-3">
+                                <label for="due-date" class="form-label">Date d'Échéance</label>
+                                <input type="date" class="form-control" id="due-date">
+                            </div>
+    
+                            <!-- Boutons d'action -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour remplir les champs en fonction du service sélectionné
+        document.getElementById("service").addEventListener("change", function() {
+            const service = this.value;
+            const paymentTypeInput = document.getElementById("payment-type");
+            const amountDueInput = document.getElementById("amount-due");
+            
+            // Exemple de montant selon le service, à remplacer par des données dynamiques
+            const amounts = {
+                abonnement: 12000,
+                cours: 5000
+            };
+
+            if (service in amounts) {
+                paymentTypeInput.value = service.charAt(0).toUpperCase() + service.slice(1);
+                amountDueInput.value = amounts[service];
+            } else {
+                paymentTypeInput.value = "";
+                amountDueInput.value = "";
+            }
+
+            updateRemainingAmount();
+        });
+
+        // Fonction pour mettre à jour le montant restant
+        document.getElementById("amount-paid").addEventListener("input", updateRemainingAmount);
+
+        function updateRemainingAmount() {
+            const amountDue = parseFloat(document.getElementById("amount-due").value) || 0;
+            const amountPaid = parseFloat(document.getElementById("amount-paid").value) || 0;
+            const amountRemaining = Math.max(amountDue - amountPaid, 0);
+            document.getElementById("amount-remaining").value = amountRemaining;
+        }
+    </script>
+</body>
+</html>
